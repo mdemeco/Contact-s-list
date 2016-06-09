@@ -1,0 +1,26 @@
+.inline-contact {
+	display: inline;
+	display: inline-block;
+	padding: 0 10px 10px 10px;
+	border: 2px solid black;
+	
+	margin: 10px;
+	word-wrap: break-word;
+}
+
+.button{
+	margin: 5px;
+}
+
+.row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.row > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
