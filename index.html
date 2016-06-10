@@ -12,7 +12,7 @@
 
 <script>
     window.onload = function() {
-        listContacts(contacts, $('#list'));
+        listContacts();
     }
     $(function() {
         $("[data-hide]").on("click", function() {
@@ -65,12 +65,12 @@
 
     <!-- Contact template -->
     <div class="inline-contact-template inline-contact col-md-3" style="display: none">
-        <h2>Name</h2>
+        <h2 class="full-name">Name</h2>
         <ul>
             <li><span>First Name:&nbsp;</span><span class="first-name">First name</span></li>
-            <li><span>Last Name:&nbsp;</span><span>Last name</span></li>
-            <li><span>email:&nbsp;</span><span>email@example.com</span></li>
-            <li><span>phone:&nbsp;</span><span>(650) 888-8888</span></li>
+            <li><span>Last Name:&nbsp;</span><span class="last-name">Last name</span></li>
+            <li><span>email:&nbsp;</span><span class="email">email@example.com</span></li>
+            <li><span>phone:&nbsp;</span><span class="phone">(650) 888-8888</span></li>
         </ul>
         <button data-contact-id="" class="btn btn-success button">Update</button>
         <button data-contact-id="" class="btn btn-danger button">Delete</button>

@@ -20,8 +20,6 @@ function resetForm() {
 }
 
 function validateForm() {
-    var contact = {};
-
     var result = false;
 
     if ($('#firstName').val() == "" || $('#lastName').val() == ""
@@ -51,13 +49,6 @@ function getContactById(contactName) {
 
 // UI calls these functions
 
-// adds new contact
-function addContact() {
-    if (!validateForm())
-        return false;
-
-    contacts.push(getFormData());
-}
 
 function getFormData() {
     var data = {};
@@ -70,16 +61,20 @@ function getFormData() {
     return data;
 }
 
+// adds new contact
+function addContact() {
+    if (!validateForm())
+        return false;
+
+    contacts.push(getFormData());
+}
+
 // updates contact
-function update(pos) {
+function updateContact(pos) {
     if (!validateForm())
         return false;
 
     $.extend(contacts[pos], getFormData());
-
-    listContacts();
-
-    resetForm();
 }
 
 // remove contact
@@ -100,20 +95,24 @@ function onAdd() {
     resetForm();
 }
 
-// TODO: onUpdate
+function onUpdate(pos) {
+    updateContact(pos);
+    
+    listContacts();
+
+    resetForm();    
+}
 
 // Show new contact form
 function showForm(type, obj) {
     $('#submit').off('click');
     if (type == "add") {
         $('#submit').text('Add');
-        $('#submit').click(onAdd);
+        $('#submit').click(onAdd());
     } else if (type == "update") {
         var index = contacts.indexOf(obj);
         $('#submit').text('Update');
-        $('#submit').click(function() {
-            update(index);
-        });
+        $('#submit').click(onUpdate(index));
 
         $("#firstName").val(obj.firstName);
         $("#lastName").val(obj.lastName);
@@ -188,9 +187,11 @@ function showForm(type, obj) {
 //}
 
 function createContactItem($template, contact) {
-    $template.find('.first-name').text(contact.name);
-    
-    // ...
+    $template.find('.full-name').text(contact.firstName + "&nbsp;" + contact.lastName);
+    $template.find('.first-name').text(contact.firstName);
+    $template.find('.last-name').text(contact.lastName);
+    $template.find('.email').text(contact.email);
+    $template.find('.phone').text(contact.phoneNumber);    
 }
 
 function listContacts() {
@@ -199,14 +200,18 @@ function listContacts() {
     $(container).empty();
 
     var $template = $('.inline-contact-template');
-    
+    for (i = 0; i < contacts.length; i++) {
+        var contact = contacts[i];
+        item = createContactItem($template, contact);
+        $(item).appendTo(list);
+    }
 //    createContactItem($template, contact):
 //        
 //        listContacts:
 //            For each contact
 //                item <- createContactItem($template, contact)
 //                append(list, item)
-    }
+    
 
-    $(container).append(list)
+    $(container).append(list);
 }
